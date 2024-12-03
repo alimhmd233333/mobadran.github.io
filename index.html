@@ -55,7 +55,34 @@
             <a href="https://mobadran.github.io/bs-pricing-page" target="_blank">bs-pricing-page</a>
         </div> -->
     </section>
+    <script>
+       try {
+            const response = await fetch('https://github.com/mobadran?tab=repositories', {
+            method: 'GET',  
+            headers: {
+                'referer': 'https://github.com/mobadran',
+                'Origin': 'https://github.com',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36'
+            }
+        });
 
+            const html = await response.text(); // Get the HTML content of the page
+
+            // Load the HTML into cheerio
+            const $ = cheerio.load(html);
+
+            // Select all <span> elements with the class "repo"
+            const repos = [];
+            $('a[itemprop="name codeRepository"]').each((i, element) => {
+                const repoContent = $(element).text().trim(); // Extract the text and remove extra whitespace
+                repos.push(repoContent); // Add to the array
+            });
+            console.log(repos)
+            // Return the array of repo names (or other content)
+        } catch (error) {
+           console.log(error)
+        }
+    </script>
     <script>
         async function getRepoNames() {
             try {
